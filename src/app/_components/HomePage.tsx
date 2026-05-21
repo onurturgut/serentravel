@@ -12,10 +12,13 @@ import {
 } from "lucide-react";
 import { TourCard } from "@/components/site/TourCard";
 import { Parallax } from "@/components/site/Parallax";
-import { tours } from "@/lib/tours";
-
-const whatsappUrl =
-  "https://wa.me/905431999411?text=Merhaba%2C%20Seren%20Travel%20turlari%20hakkinda%20bilgi%20almak%20istiyorum.";
+import type { HomeContent, SiteSettings } from "@/lib/site-defaults";
+import {
+  defaultContent,
+  defaultSettings,
+  whatsappUrl,
+} from "@/lib/site-defaults";
+import type { Tour } from "@/lib/tours";
 
 const features = [
   {
@@ -35,8 +38,16 @@ const features = [
   },
 ];
 
-export function HomePage() {
-  const featuredTours = tours.slice(0, 8);
+export function HomePage({
+  featuredTours,
+  content = defaultContent.home,
+  settings = defaultSettings,
+}: {
+  featuredTours: Tour[];
+  content?: HomeContent;
+  settings?: SiteSettings;
+}) {
+  const whatsAppHref = whatsappUrl(settings);
 
   return (
     <>
@@ -63,7 +74,7 @@ export function HomePage() {
           >
             <span className="h-px w-10 bg-brand-red" />
             <span className="text-[10px] uppercase tracking-[0.36em] text-gold md:text-xs">
-              Fethiye · Oludeniz · Babadag
+              {content.heroEyebrow}
             </span>
           </motion.div>
 
@@ -73,7 +84,7 @@ export function HomePage() {
             transition={{ duration: 0.95, delay: 0.4 }}
             className="mt-5 max-w-5xl text-balance font-display text-[40px] leading-[1.02] text-white sm:text-5xl md:text-7xl"
           >
-            Fethiye ve Oludeniz'de secilmis tur deneyimleri.
+            {content.heroTitle}
           </motion.h1>
 
           <motion.p
@@ -82,8 +93,7 @@ export function HomePage() {
             transition={{ duration: 0.85, delay: 0.58 }}
             className="mt-5 max-w-2xl text-base leading-relaxed text-white/78 md:text-lg"
           >
-            Yamac parasutu, tekne turlari, safari ve ozel rotalar icin yerel
-            ekipten hizli WhatsApp destegi alin.
+            {content.heroDescription}
           </motion.p>
 
           <motion.div
@@ -93,22 +103,22 @@ export function HomePage() {
             className="mt-8 flex flex-wrap items-center gap-3"
           >
             <Link
-              href="/turlar"
+              href={content.primaryButtonHref}
               className="group inline-flex h-12 items-center gap-2 rounded-full bg-gold pl-6 pr-3 text-sm font-semibold text-navy-deep transition-colors hover:bg-gold-soft md:h-14"
             >
-              Turlari Incele
+              {content.primaryButtonText}
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-deep text-white transition-transform group-hover:translate-x-0.5 md:h-10 md:w-10">
                 <ArrowRight className="h-4 w-4" />
               </span>
             </Link>
             <a
-              href={whatsappUrl}
+              href={whatsAppHref}
               target="_blank"
               rel="noreferrer"
               className="inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 text-sm font-medium text-white backdrop-blur-md transition-colors hover:border-sea hover:text-sea md:h-14"
             >
               <MessageCircle className="h-4 w-4 text-sea" />
-              WhatsApp ile Bilgi Al
+              {content.secondaryButtonText}
             </a>
           </motion.div>
         </div>
@@ -123,30 +133,28 @@ export function HomePage() {
             transition={{ duration: 0.7 }}
           >
             <span className="text-xs uppercase tracking-[0.3em] text-gold">
-              Neden Seren Travel?
+              {content.whyEyebrow}
             </span>
             <h2 className="mt-5 text-balance font-display text-4xl leading-[1.08] md:text-6xl">
-              Yerel ekipten net bilgi, guvenli tur planlamasi.
+              {content.whyTitle}
             </h2>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-foreground/70">
-              Fethiye ve Oludeniz cevresindeki turlar icin uygun saat, rota,
-              transfer ve fiyat bilgilerini hizlica ogrenin. Seren Travel ekibi
-              size en uygun deneyimi WhatsApp uzerinden net sekilde iletir.
+              {content.whyDescription}
             </p>
             <a
-              href={whatsappUrl}
+              href={whatsAppHref}
               target="_blank"
               rel="noreferrer"
               className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-navy px-6 text-sm font-semibold text-white transition-colors hover:bg-gold hover:text-navy-deep"
             >
               <MessageCircle className="h-4 w-4" />
-              WhatsApp'tan Bilgi Al
+              {content.whyButtonText}
             </a>
             <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium uppercase tracking-[0.18em] text-foreground/45">
               <span>Turkce & Ingilizce destek</span>
-              <span className="text-brand-red">•</span>
+              <span className="text-brand-red">·</span>
               <span>Otel transferli turlar</span>
-              <span className="text-brand-red">•</span>
+              <span className="text-brand-red">·</span>
               <span>Guncel uygunluk bilgisi</span>
             </div>
           </motion.div>
@@ -181,17 +189,17 @@ export function HomePage() {
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="text-xs uppercase tracking-[0.3em] text-gold">
-                One Cikan Deneyimler
+                {content.featuredEyebrow}
               </span>
               <h2 className="mt-4 max-w-2xl text-balance font-display text-4xl leading-[1.08] md:text-6xl">
-                Fethiye tatilini netlestiren turlar.
+                {content.featuredTitle}
               </h2>
             </div>
             <Link
-              href="/turlar"
+              href={content.primaryButtonHref}
               className="inline-flex items-center gap-2 text-sm font-semibold text-foreground/70 hover:text-foreground"
             >
-              Tum turlari gor
+              {content.featuredLinkText}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -210,32 +218,30 @@ export function HomePage() {
           <div className="grid gap-8 rounded-lg bg-navy-deep p-8 text-white shadow-xl md:grid-cols-[1fr_auto] md:items-center md:p-10">
             <div>
               <span className="text-xs uppercase tracking-[0.3em] text-gold">
-                WhatsApp Destek
+                {content.ctaEyebrow}
               </span>
               <h2 className="mt-4 max-w-2xl font-display text-4xl leading-[1.08] md:text-5xl">
-                Uygunluk ve fiyat bilgisi icin dogrudan yazin.
+                {content.ctaTitle}
               </h2>
               <p className="mt-4 max-w-xl text-white/65">
-                Gunluk programlar, hava kosullari ve sezon yogunluguna gore
-                degisebilir. Seren Travel ekibi size en uygun secenegi WhatsApp
-                uzerinden hizlica iletir.
+                {content.ctaDescription}
               </p>
             </div>
             <div className="flex flex-wrap gap-3 md:justify-end">
               <a
-                href={whatsappUrl}
+                href={whatsAppHref}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex h-12 items-center gap-2 rounded-full bg-gold px-6 text-sm font-semibold text-navy-deep transition-colors hover:bg-gold-soft"
               >
                 <MessageCircle className="h-4 w-4" />
-                WhatsApp
+                {content.ctaPrimaryText}
               </a>
               <Link
                 href="/iletisim"
                 className="inline-flex h-12 items-center gap-2 rounded-full border border-white/20 px-6 text-sm font-semibold transition-colors hover:bg-white hover:text-navy-deep"
               >
-                Iletisim
+                {content.ctaSecondaryText}
                 <Compass className="h-4 w-4" />
               </Link>
             </div>

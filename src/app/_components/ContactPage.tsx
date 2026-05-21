@@ -2,11 +2,22 @@
 
 import { motion } from "framer-motion";
 import { Instagram, MapPin, MessageCircle } from "lucide-react";
+import type { ContactContent, SiteSettings } from "@/lib/site-defaults";
+import {
+  defaultContent,
+  defaultSettings,
+  whatsappUrl,
+} from "@/lib/site-defaults";
 
-const whatsappUrl =
-  "https://wa.me/905431999411?text=Merhaba%2C%20Seren%20Travel%20turlari%20hakkinda%20bilgi%20almak%20istiyorum.";
+export function ContactPage({
+  content = defaultContent.contact,
+  settings = defaultSettings,
+}: {
+  content?: ContactContent;
+  settings?: SiteSettings;
+}) {
+  const whatsAppHref = whatsappUrl(settings);
 
-export function ContactPage() {
   return (
     <>
       <section className="bg-navy-deep pb-14 pt-32 text-white md:pb-20 md:pt-40">
@@ -16,7 +27,7 @@ export function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-xs uppercase tracking-[0.3em] text-gold"
           >
-            Iletisim
+            {content.heroEyebrow}
           </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -24,7 +35,7 @@ export function ContactPage() {
             transition={{ delay: 0.1 }}
             className="mt-5 max-w-4xl font-display text-5xl leading-[1.04] md:text-7xl"
           >
-            Tur detaylari icin WhatsApp'tan yazin.
+            {content.heroTitle}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -32,8 +43,7 @@ export function ContactPage() {
             transition={{ delay: 0.2 }}
             className="mt-6 max-w-2xl text-white/65"
           >
-            Seren Travel ekibi uygunluk, fiyat, seans ve transfer bilgilerini
-            size dogrudan WhatsApp uzerinden iletir.
+            {content.heroDescription}
           </motion.p>
         </div>
       </section>
@@ -44,7 +54,7 @@ export function ContactPage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            href={whatsappUrl}
+            href={whatsAppHref}
             target="_blank"
             rel="noreferrer"
             className="flex min-h-[280px] flex-col justify-between rounded-lg bg-navy-deep p-8 text-white shadow-xl transition-transform duration-500 hover:-translate-y-1 md:p-10"
@@ -54,20 +64,20 @@ export function ContactPage() {
                 <MessageCircle className="h-6 w-6" />
               </div>
               <h2 className="mt-8 font-display text-4xl leading-[1.08] md:text-5xl">
-                WhatsApp ile hizli bilgi alin.
+                {content.whatsappCardTitle}
               </h2>
               <p className="mt-4 max-w-xl text-white/65">
-                Form doldurmadan, beklemeden, dogrudan ekip ile konusun.
+                {content.whatsappCardDescription}
               </p>
             </div>
             <span className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-gold px-6 text-sm font-semibold text-navy-deep transition-colors hover:bg-gold-soft sm:self-start">
-              WhatsApp'tan Yaz
+              {content.whatsappButtonText}
             </span>
           </motion.a>
 
           <div className="grid gap-5">
             <a
-              href="https://www.instagram.com/serentravelagency/"
+              href={settings.instagramUrl}
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-5 rounded-lg border border-foreground/10 bg-card p-7 shadow-sm transition-colors hover:border-gold/40"
@@ -77,10 +87,10 @@ export function ContactPage() {
               </div>
               <div>
                 <div className="text-xs uppercase tracking-[0.25em] text-foreground/50">
-                  Instagram
+                  {content.instagramTitle}
                 </div>
                 <div className="mt-1 text-2xl font-semibold">
-                  @serentravelagency
+                  {settings.instagramLabel}
                 </div>
               </div>
             </a>
@@ -90,10 +100,10 @@ export function ContactPage() {
               </div>
               <div>
                 <div className="text-xs uppercase tracking-[0.25em] text-foreground/50">
-                  Lokasyon
+                  {content.locationTitle}
                 </div>
                 <div className="mt-1 text-2xl font-semibold">
-                  Fethiye / Mugla
+                  {settings.location}
                 </div>
               </div>
             </div>
@@ -106,7 +116,9 @@ export function ContactPage() {
           <div className="aspect-[16/9] overflow-hidden rounded-lg border border-foreground/10 md:aspect-[21/9]">
             <iframe
               title="Seren Travel Lokasyon"
-              src="https://www.google.com/maps?q=Fethiye+Mu%C4%9Fla&output=embed"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                content.mapQuery,
+              )}&output=embed`}
               loading="lazy"
               className="h-full w-full"
             />

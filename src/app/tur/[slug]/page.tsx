@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTour, tours } from "@/lib/tours";
+import { getRelatedTours, getTour, getTours } from "@/lib/content";
 import { TourDetailPage } from "../../_components/TourDetailPage";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const tours = await getTours();
+
   return tours.map((tour) => ({ slug: tour.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const tour = getTour(slug);
+  const tour = await getTour(slug);
 
   if (!tour) {
     return {};
@@ -27,11 +29,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const tour = getTour(slug);
+  const tour = await getTour(slug);
 
   if (!tour) {
     notFound();
   }
 
-  return <TourDetailPage tour={tour} />;
+  const relatedTours = await getRelatedTours(slug, 3);
+
+  return <TourDetailPage tour={tour} relatedTours={relatedTours} />;
 }

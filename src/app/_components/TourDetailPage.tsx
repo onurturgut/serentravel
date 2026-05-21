@@ -14,14 +14,17 @@ import {
 import { Gallery } from "@/components/site/Gallery";
 import { TourCard } from "@/components/site/TourCard";
 import type { Tour } from "@/lib/tours";
-import { tours } from "@/lib/tours";
 
 const whatsappUrl =
   "https://wa.me/905431999411?text=Merhaba%2C%20Seren%20Travel%20turu%20hakkinda%20bilgi%20almak%20istiyorum.";
 
-export function TourDetailPage({ tour }: { tour: Tour }) {
-  const related = tours.filter((item) => item.slug !== tour.slug).slice(0, 3);
-
+export function TourDetailPage({
+  tour,
+  relatedTours,
+}: {
+  tour: Tour;
+  relatedTours: Tour[];
+}) {
   return (
     <>
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden bg-navy-deep md:h-[76vh]">
@@ -210,7 +213,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
             Benzer deneyimler
           </h2>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
-            {related.map((item, index) => (
+            {relatedTours.map((item, index) => (
               <TourCard key={item.slug} tour={item} index={index} />
             ))}
           </div>

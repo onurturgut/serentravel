@@ -5,39 +5,32 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Instagram, Menu, MessageCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { SiteSettings } from "@/lib/site-defaults";
+import { defaultSettings, whatsappUrl } from "@/lib/site-defaults";
 
-const whatsappUrl =
-  "https://wa.me/905431999411?text=Merhaba%2C%20Seren%20Travel%20turlari%20hakkinda%20bilgi%20almak%20istiyorum.";
-
-const nav = [
-  { to: "/", label: "Anasayfa" },
-  { to: "/hakkimizda", label: "Hakkimizda" },
-  { to: "/turlar", label: "Turlar" },
-  { to: "/iletisim", label: "Iletisim" },
-];
-
-function Brand() {
+function Brand({ settings }: { settings: SiteSettings }) {
   return (
-    <span className="flex items-center gap-3">
-      <span className="flex h-11 w-11 items-center justify-center rounded-full border-[3px] border-gold bg-white text-sm font-semibold text-navy shadow-sm ring-2 ring-brand-red/85">
-        ST
-      </span>
-      <span className="leading-none">
-        <span className="block text-sm font-semibold tracking-[0.22em] text-white">
-          SEREN
-        </span>
-        <span className="mt-1 block text-[10px] tracking-[0.32em] text-gold">
-          TRAVEL
-        </span>
-      </span>
+    <span className="flex items-center">
+      <img
+        src="/images/brand/header-logo.png"
+        alt={`${settings.brandTop} ${settings.brandBottom}`}
+        width={256}
+        height={256}
+        className="h-12 w-12 rounded-full bg-white object-cover shadow-md ring-2 ring-gold/80 md:h-14 md:w-14"
+      />
     </span>
   );
 }
 
-export function Header() {
+export function Header({
+  settings = defaultSettings,
+}: {
+  settings?: SiteSettings;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const whatsAppHref = whatsappUrl(settings);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -66,18 +59,18 @@ export function Header() {
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto grid h-[4.25rem] max-w-7xl grid-cols-[1fr_auto] items-center px-5 md:h-20 md:grid-cols-[1fr_auto_1fr] md:px-8">
-          <Link href="/" aria-label="Seren Travel anasayfa">
-            <Brand />
+        <div className="mx-auto grid h-[4.25rem] max-w-7xl grid-cols-[1fr_auto] items-center px-4 sm:px-5 md:h-20 md:grid-cols-[1fr_auto_1fr] md:px-8">
+          <Link href="/" aria-label={`${settings.brandTop} anasayfa`}>
+            <Brand settings={settings} />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
-            {nav.map((n) => {
-              const active = pathname === n.to;
+            {settings.navLinks.map((n) => {
+              const active = pathname === n.href;
               return (
                 <Link
-                  key={n.to}
-                  href={n.to}
+                  key={n.href}
+                  href={n.href}
                   className={`text-sm font-medium transition-colors ${
                     active
                       ? "text-gold underline decoration-brand-red decoration-2 underline-offset-8"
@@ -92,28 +85,28 @@ export function Header() {
 
           <div className="flex items-center justify-end gap-3">
             <a
-              href={whatsappUrl}
+              href={whatsAppHref}
               target="_blank"
               rel="noreferrer"
               aria-label="WhatsApp ile iletisime gec"
               title="WhatsApp"
-              className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-sea hover:text-sea md:inline-flex"
+              className="tap-target hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-sea hover:text-sea md:inline-flex"
             >
               <MessageCircle className="h-4 w-4" />
             </a>
             <a
-              href="https://www.instagram.com/serentravelagency/"
+              href={settings.instagramUrl}
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
-              className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold md:inline-flex"
+              className="tap-target hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-gold hover:text-gold md:inline-flex"
             >
               <Instagram className="h-4 w-4" />
             </a>
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white md:hidden"
+              className="tap-target inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white md:hidden"
               aria-label="Menuyu ac"
             >
               <Menu className="h-5 w-5" />
@@ -132,7 +125,7 @@ export function Header() {
             className="fixed inset-0 z-[60] bg-navy-deep md:hidden"
           >
             <div className="flex h-[4.25rem] items-center justify-between px-5">
-              <Brand />
+              <Brand settings={settings} />
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -143,15 +136,15 @@ export function Header() {
               </button>
             </div>
             <nav className="flex flex-col gap-6 px-8 pt-10">
-              {nav.map((n, i) => (
+              {settings.navLinks.map((n, i) => (
                 <motion.div
-                  key={n.to}
+                  key={n.href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.06 }}
                 >
                   <Link
-                    href={n.to}
+                    href={n.href}
                     className="block font-display text-5xl text-white transition-colors hover:text-gold"
                   >
                     {n.label}
@@ -161,7 +154,7 @@ export function Header() {
             </nav>
             <div className="absolute inset-x-8 bottom-10 flex items-center justify-between border-t border-white/10 pt-6">
               <a
-                href={whatsappUrl}
+                href={whatsAppHref}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex h-11 items-center gap-3 rounded-full bg-gold px-5 text-sm font-semibold text-navy-deep"
@@ -170,7 +163,7 @@ export function Header() {
                 WhatsApp
               </a>
               <a
-                href="https://www.instagram.com/serentravelagency/"
+                href={settings.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Instagram"

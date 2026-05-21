@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getSiteContent } from "@/lib/site-content";
 import { AboutPage } from "../_components/AboutPage";
 
 export const metadata: Metadata = {
@@ -7,6 +8,8 @@ export const metadata: Metadata = {
     "SEREN Travel'ın Fethiye merkezli tur organizasyonu yaklaşımı ve misafir deneyimi.",
 };
 
-export default function Page() {
-  return <AboutPage />;
+export default async function Page() {
+  const content = await getSiteContent();
+
+  return <AboutPage content={content.about} />;
 }

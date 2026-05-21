@@ -1,6 +1,7 @@
 const tourImage = (file: string) => `/images/tours/${file}`;
 
 export type Tour = {
+  id?: string;
   slug: string;
   title: string;
   category: string;
@@ -14,6 +15,9 @@ export type Tour = {
   stops?: string[];
   notes?: string[];
   gallery: string[];
+  order?: number;
+  isFeatured?: boolean;
+  isActive?: boolean;
 };
 
 export const tours: Tour[] = [
