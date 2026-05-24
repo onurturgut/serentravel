@@ -53,7 +53,7 @@ export function Header({
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-500 ${
           scrolled
             ? "border-b border-white/10 bg-navy-deep/86 backdrop-blur-xl"
             : "bg-transparent"
@@ -122,7 +122,7 @@ export function Header({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[60] bg-navy-deep md:hidden"
+            className="fixed inset-0 z-[60] bg-navy-deep pt-[env(safe-area-inset-top)] md:hidden"
           >
             <div className="flex h-[4.25rem] items-center justify-between px-5">
               <Brand settings={settings} />
@@ -152,7 +152,7 @@ export function Header({
                 </motion.div>
               ))}
             </nav>
-            <div className="absolute inset-x-8 bottom-10 flex items-center justify-between border-t border-white/10 pt-6">
+            <div className="absolute inset-x-8 bottom-[calc(2.5rem+env(safe-area-inset-bottom))] flex items-center justify-between border-t border-white/10 pt-6">
               <a
                 href={whatsAppHref}
                 target="_blank"

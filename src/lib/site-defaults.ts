@@ -95,6 +95,8 @@ export const defaultSettings: SiteSettings = {
     { href: "/", label: "Anasayfa" },
     { href: "/hakkimizda", label: "Hakkimizda" },
     { href: "/turlar", label: "Turlar" },
+    { href: "/transfer", label: "Transfer" },
+    { href: "/galeri", label: "Galeri" },
     { href: "/iletisim", label: "Iletisim" },
   ],
 };
@@ -109,9 +111,9 @@ export const defaultContent: SiteContent = {
     primaryButtonHref: "/turlar",
     secondaryButtonText: "WhatsApp ile Bilgi Al",
     whyEyebrow: "Neden Seren Travel?",
-    whyTitle: "Yerel ekipten net bilgi, guvenli tur planlamasi.",
+    whyTitle: "Fethiye'yi bilen birine sorun.",
     whyDescription:
-      "Fethiye ve Oludeniz cevresindeki turlar icin uygun saat, rota, transfer ve fiyat bilgilerini hizlica ogrenin. Seren Travel ekibi size en uygun deneyimi WhatsApp uzerinden net sekilde iletir.",
+      "Hangi tur hangi gun daha iyi, nereden alinacaksiniz, cocukla uygun mu, hava nasil etkiler? Seren Travel ekibi size sade ve net bilgi verir.",
     whyButtonText: "WhatsApp'tan Bilgi Al",
     featuredEyebrow: "One Cikan Deneyimler",
     featuredTitle: "Fethiye tatilini netlestiren turlar.",

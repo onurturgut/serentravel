@@ -50,13 +50,44 @@ function plainValue(value: { title?: unknown; text?: unknown }) {
   };
 }
 
+function mergeNavLinks(links?: SiteSettings["navLinks"]) {
+  const merged = links?.length
+    ? links.map(plainLink).filter((link) => link.label && link.href)
+    : [...defaultSettings.navLinks];
+
+  for (const defaultLink of defaultSettings.navLinks) {
+    if (!merged.some((link) => link.href === defaultLink.href)) {
+      merged.push(defaultLink);
+    }
+  }
+
+  return merged;
+}
+
+function mergeHomeContent(home?: Partial<SiteContent["home"]>) {
+  const merged = { ...defaultContent.home, ...(home || {}) };
+
+  if (merged.whyTitle === "Yerel ekipten net bilgi, guvenli tur planlamasi.") {
+    merged.whyTitle = defaultContent.home.whyTitle;
+  }
+
+  if (
+    merged.whyDescription ===
+    "Fethiye ve Oludeniz cevresindeki turlar icin uygun saat, rota, transfer ve fiyat bilgilerini hizlica ogrenin. Seren Travel ekibi size en uygun deneyimi WhatsApp uzerinden net sekilde iletir."
+  ) {
+    merged.whyDescription = defaultContent.home.whyDescription;
+  }
+
+  return merged;
+}
+
 function mergeContent(content?: StoredContent | null): SiteContent {
   const plain = stripMongoFields(
     content as Record<string, unknown> | null,
   ) as Partial<SiteContent> | null;
 
   return {
-    home: { ...defaultContent.home, ...(plain?.home || {}) },
+    home: mergeHomeContent(plain?.home),
     tours: { ...defaultContent.tours, ...(plain?.tours || {}) },
     about: {
       ...defaultContent.about,
@@ -77,9 +108,7 @@ function mergeSettings(settings?: StoredSettings | null): SiteSettings {
   return {
     ...defaultSettings,
     ...(plain || {}),
-    navLinks: plain?.navLinks?.length
-      ? plain.navLinks.map(plainLink)
-      : defaultSettings.navLinks,
+    navLinks: mergeNavLinks(plain?.navLinks),
   };
 }
 

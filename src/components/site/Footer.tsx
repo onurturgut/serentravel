@@ -92,7 +92,8 @@ export function Footer({
         <div className="mx-auto max-w-7xl grid grid-cols-1 items-center gap-3 px-5 py-6 text-xs text-white/40 md:grid-cols-3 md:px-8">
           <div className="md:text-left">
             <span>
-              © {new Date().getFullYear()} {settings.brandTop} {settings.brandBottom}. Tum haklari saklidir.
+              © {new Date().getFullYear()} {settings.brandTop}{" "}
+              {settings.brandBottom}. Tum haklari saklidir.
             </span>
           </div>
 

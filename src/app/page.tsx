@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const [featuredTours, content, settings] = await Promise.all([
-    getFeaturedTours(8),
+    getFeaturedTours(3),
     getSiteContent(),
     getSiteSettings(),
   ]);

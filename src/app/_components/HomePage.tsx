@@ -5,12 +5,10 @@ import { motion } from "framer-motion";
 import {
   ArrowRight,
   Compass,
-  Languages,
   MapPinned,
   MessageCircle,
   ShieldCheck,
 } from "lucide-react";
-import { TourCard } from "@/components/site/TourCard";
 import { Parallax } from "@/components/site/Parallax";
 import type { HomeContent, SiteSettings } from "@/lib/site-defaults";
 import {
@@ -22,19 +20,19 @@ import type { Tour } from "@/lib/tours";
 
 const features = [
   {
-    icon: ShieldCheck,
-    title: "Guvenli Tur Deneyimi",
-    text: "Profesyonel ekipler, sigortali programlar ve aktiviteye uygun guvenlik prosedurleriyle planlama yapilir.",
-  },
-  {
     icon: MapPinned,
-    title: "Bolgeyi Bilen Yerel Ekip",
-    text: "Oludeniz, Fethiye, Saklikent, Dalyan ve cevre rotalarda dogru zamanlama ve pratik oneriler sunulur.",
+    title: "Yerinden Tavsiye",
+    text: "Bolgeyi bilen ekipten rota, hava durumu ve zamanlama icin gercekci oneriler alin.",
   },
   {
-    icon: Languages,
-    title: "WhatsApp ile Hizli Bilgi",
-    text: "Uygunluk, fiyat, transfer ve program detaylarini form doldurmadan dogrudan ogrenebilirsiniz.",
+    icon: MessageCircle,
+    title: "Kolay Rezervasyon",
+    text: "WhatsApp uzerinden hizli bilgi, kolay karar ve pratik rezervasyon sureci.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Rahat Katilim",
+    text: "Transfer, saat ve program detaylari onceden netlesir; siz sadece gune hazirlanin.",
   },
 ];
 
@@ -48,6 +46,8 @@ export function HomePage({
   settings?: SiteSettings;
 }) {
   const whatsAppHref = whatsappUrl(settings);
+  const primaryFeaturedTour = featuredTours[0];
+  const previewTours = featuredTours.slice(0, 3);
 
   return (
     <>
@@ -124,42 +124,64 @@ export function HomePage({
         </div>
       </section>
 
-      <section className="bg-background py-16 md:py-24">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 md:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
+      <section className="relative overflow-hidden bg-navy-deep py-16 md:py-24">
+        <img
+          src="/images/tours/gun-batimi-tekne-turu.jpg"
+          alt="Seren Travel Fethiye"
+          loading="lazy"
+          width={1600}
+          height={900}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-navy-deep/58" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/82 via-navy-deep/54 to-navy-deep/22" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/86 via-transparent to-transparent" />
+
+        <div className="relative z-10 mx-auto grid max-w-7xl gap-10 px-5 md:px-8 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
+            className="lg:sticky lg:top-28 lg:self-start"
           >
             <span className="text-xs uppercase tracking-[0.3em] text-gold">
               {content.whyEyebrow}
             </span>
-            <h2 className="mt-5 text-balance font-display text-4xl leading-[1.08] md:text-6xl">
+            <h2 className="mt-5 max-w-2xl text-balance font-display text-4xl leading-[1.08] text-white md:text-6xl">
               {content.whyTitle}
             </h2>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-foreground/70">
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/72">
               {content.whyDescription}
             </p>
-            <a
-              href={whatsAppHref}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8 inline-flex h-12 items-center gap-2 rounded-full bg-navy px-6 text-sm font-semibold text-white transition-colors hover:bg-gold hover:text-navy-deep"
-            >
-              <MessageCircle className="h-4 w-4" />
-              {content.whyButtonText}
-            </a>
-            <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-xs font-medium uppercase tracking-[0.18em] text-foreground/45">
-              <span>Turkce & Ingilizce destek</span>
-              <span className="text-brand-red">·</span>
-              <span>Otel transferli turlar</span>
-              <span className="text-brand-red">·</span>
-              <span>Guncel uygunluk bilgisi</span>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href={whatsAppHref}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex h-12 items-center gap-2 rounded-full bg-navy pl-6 pr-3 text-sm font-semibold text-white transition-colors hover:bg-gold hover:text-navy-deep"
+              >
+                <MessageCircle className="h-4 w-4" />
+                {content.whyButtonText}
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 transition-transform group-hover:translate-x-0.5 group-hover:bg-navy-deep group-hover:text-white">
+                  <ArrowRight className="h-4 w-4" />
+                </span>
+              </a>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-2">
+              <span className="rounded-full border border-white/18 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-white/72 shadow-sm backdrop-blur-md">
+                Yerel ekip
+              </span>
+              <span className="rounded-full border border-white/18 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-white/72 shadow-sm backdrop-blur-md">
+                Guncel uygunluk
+              </span>
+              <span className="rounded-full border border-white/18 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-white/72 shadow-sm backdrop-blur-md">
+                Transfer destegi
+              </span>
             </div>
           </motion.div>
 
-          <div className="grid gap-4">
+          <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -167,7 +189,7 @@ export function HomePage({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group grid gap-5 rounded-lg border border-foreground/10 bg-card p-6 shadow-sm transition-colors hover:border-gold/50 sm:grid-cols-[auto_1fr]"
+                className="group grid gap-5 rounded-lg border border-foreground/10 bg-card p-6 text-foreground shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-md lg:grid-cols-[auto_1fr] lg:p-7"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy text-gold transition-colors group-hover:bg-gold group-hover:text-navy-deep">
                   <feature.icon className="h-5 w-5" />
@@ -184,37 +206,122 @@ export function HomePage({
         </div>
       </section>
 
-      <section className="bg-sand-light py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <span className="text-xs uppercase tracking-[0.3em] text-gold">
-                {content.featuredEyebrow}
-              </span>
-              <h2 className="mt-4 max-w-2xl text-balance font-display text-4xl leading-[1.08] md:text-6xl">
-                {content.featuredTitle}
-              </h2>
+      {primaryFeaturedTour && (
+        <section className="relative overflow-hidden bg-navy-deep py-16 text-white md:py-24">
+          <img
+            src={primaryFeaturedTour.image}
+            alt={primaryFeaturedTour.title}
+            loading="lazy"
+            width={1600}
+            height={900}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/78 to-navy-deep/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-transparent to-navy-deep/35" />
+
+          <div className="relative z-10 mx-auto max-w-[92rem] px-5 md:px-8">
+            <div className="flex min-h-[720px] flex-col justify-between gap-12 py-6 md:py-10">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7 }}
+                className="max-w-4xl"
+              >
+                <span className="text-xs uppercase tracking-[0.3em] text-gold">
+                  {content.featuredEyebrow}
+                </span>
+                <h2 className="mt-5 max-w-3xl text-balance font-display text-5xl leading-[1.02] md:text-7xl">
+                  {content.featuredTitle}
+                </h2>
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
+                  Fethiye'de en cok tercih edilen deneyimleri tek bakista
+                  inceleyin; rota, sure ve rezervasyon detaylarina hizlica
+                  ulasin.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link
+                    href={`/tur/${primaryFeaturedTour.slug}`}
+                    className="group inline-flex h-12 items-center gap-2 rounded-full bg-gold pl-6 pr-3 text-sm font-semibold text-navy-deep transition-colors hover:bg-gold-soft"
+                  >
+                    {primaryFeaturedTour.title}
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-navy-deep text-white transition-transform group-hover:translate-x-0.5">
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </Link>
+                  <Link
+                    href={content.primaryButtonHref}
+                    className="inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 text-sm font-semibold text-white backdrop-blur-md transition-colors hover:border-gold hover:text-gold"
+                  >
+                    {content.featuredLinkText}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </motion.div>
+
+              <div className="-mx-5 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [-ms-overflow-style:none] md:mx-0 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
+                <div className="grid min-w-[1110px] grid-cols-3 gap-6 md:min-w-0 md:gap-7">
+                  {previewTours.map((tour, index) => (
+                    <motion.div
+                      key={tour.slug}
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-80px" }}
+                      transition={{ duration: 0.55, delay: index * 0.08 }}
+                    >
+                      <Link
+                        href={`/tur/${tour.slug}`}
+                        className="group relative flex aspect-[16/10] min-h-[340px] w-full overflow-hidden rounded-lg border border-white/14 bg-white/10 shadow-xl backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-gold/60 lg:min-h-[390px]"
+                      >
+                        <img
+                          src={tour.image}
+                          alt={tour.title}
+                          loading="lazy"
+                          width={360}
+                          height={260}
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/52 to-navy-deep/8" />
+                        <div className="relative z-10 flex min-w-0 flex-1 flex-col justify-end p-5 md:p-6">
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-gold">
+                            {tour.category}
+                          </span>
+                          <h3 className="mt-3 line-clamp-2 font-display text-3xl leading-tight text-white md:text-4xl">
+                            {tour.title}
+                          </h3>
+                          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/70">
+                            {tour.short}
+                          </p>
+                          <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/78 transition-colors group-hover:text-gold">
+                            Detaylari incele
+                            <ArrowRight className="h-3.5 w-3.5" />
+                          </span>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <Link
-              href={content.primaryButtonHref}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-foreground/70 hover:text-foreground"
-            >
-              {content.featuredLinkText}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-4">
-            {featuredTours.map((tour, index) => (
-              <TourCard key={tour.slug} tour={tour} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Parallax />
 
-      <section className="bg-background py-16 md:py-24">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
+      <section className="relative overflow-hidden bg-navy-deep py-16 md:py-24">
+        <img
+          src="/images/tours/fethiye-12-adalar-tekne-turu-3.jpg"
+          alt="Seren Travel galeri"
+          loading="lazy"
+          width={1600}
+          height={900}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-navy-deep/68" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/30 to-transparent" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
           <div className="grid gap-8 rounded-lg bg-navy-deep p-8 text-white shadow-xl md:grid-cols-[1fr_auto] md:items-center md:p-10">
             <div>
               <span className="text-xs uppercase tracking-[0.3em] text-gold">
