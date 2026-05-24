@@ -89,12 +89,27 @@ export function Footer({
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-6 text-xs text-white/40 md:flex-row md:px-8">
-          <span>
-            © {new Date().getFullYear()} {settings.brandTop}{" "}
-            {settings.brandBottom}. Tum haklari saklidir.
-          </span>
-          <span>{settings.footerBottomText}</span>
+        <div className="mx-auto max-w-7xl grid grid-cols-1 items-center gap-3 px-5 py-6 text-xs text-white/40 md:grid-cols-3 md:px-8">
+          <div className="md:text-left">
+            <span>
+              © {new Date().getFullYear()} {settings.brandTop} {settings.brandBottom}. Tum haklari saklidir.
+            </span>
+          </div>
+
+          <div className="text-center">
+            <a
+              href="https://www.onurturgut.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 hover:underline"
+            >
+              aisurix.web
+            </a>
+          </div>
+
+          <div className="md:text-right">
+            <span>{settings.footerBottomText}</span>
+          </div>
         </div>
       </div>
     </footer>
