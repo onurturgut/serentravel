@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Invoke-RestMethod -Method POST -Uri \"http://localhost:3000/api/admin/migrate-images\")"
+    ]
+  }
+}

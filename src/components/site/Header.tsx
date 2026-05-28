@@ -7,12 +7,13 @@ import { Instagram, Menu, MessageCircle, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { SiteSettings } from "@/lib/site-defaults";
 import { defaultSettings, whatsappUrl } from "@/lib/site-defaults";
+import { siteImage } from "@/lib/utils";
 
 function Brand({ settings }: { settings: SiteSettings }) {
   return (
     <span className="flex items-center">
       <img
-        src="/images/brand/header-logo.png"
+        src={siteImage("/images/brand/header-logo.png")}
         alt={`${settings.brandTop} ${settings.brandBottom}`}
         width={256}
         height={256}
@@ -53,13 +54,13 @@ export function Header({
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] transition-all duration-500 ${
+        className={`fixed inset-x-0 top-0 z-50 w-screen max-w-[100vw] pt-[env(safe-area-inset-top)] transition-all duration-500 ${
           scrolled
             ? "border-b border-white/10 bg-navy-deep/86 backdrop-blur-xl"
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto grid h-[4.25rem] max-w-7xl grid-cols-[1fr_auto] items-center px-4 sm:px-5 md:h-20 md:grid-cols-[1fr_auto_1fr] md:px-8">
+        <div className="mx-auto grid h-[4.25rem] max-w-7xl grid-cols-[auto_auto] items-center justify-between px-4 sm:px-5 md:h-20 md:grid-cols-[1fr_auto_1fr] md:px-8">
           <Link href="/" aria-label={`${settings.brandTop} anasayfa`}>
             <Brand settings={settings} />
           </Link>

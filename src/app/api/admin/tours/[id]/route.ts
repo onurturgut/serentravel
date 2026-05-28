@@ -1,7 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 import { isAdminRequest, unauthorized } from "@/lib/admin-auth";
-import { connectDb, hasMongoUri } from "@/lib/db";
+import { connectDb, getDatabaseErrorMessage, hasMongoUri } from "@/lib/db";
 import { slugify } from "@/lib/slug";
 import { TourModel } from "@/models/Tour";
 
@@ -62,11 +62,19 @@ export async function PUT(request: NextRequest, { params }: Props) {
     unknown
   >;
 
-  await connectDb();
-  const updated = await TourModel.findByIdAndUpdate(id, normalizeTour(body), {
-    new: true,
-    runValidators: true,
-  });
+  let updated;
+  try {
+    await connectDb();
+    updated = await TourModel.findByIdAndUpdate(id, normalizeTour(body), {
+      new: true,
+      runValidators: true,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: getDatabaseErrorMessage(error) },
+      { status: 503 },
+    );
+  }
 
   if (!updated) {
     return NextResponse.json({ error: "Tur bulunamadi." }, { status: 404 });
@@ -91,8 +99,16 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 
   const { id } = await params;
 
-  await connectDb();
-  await TourModel.findByIdAndDelete(id);
+  try {
+    await connectDb();
+    await TourModel.findByIdAndDelete(id);
+  } catch (error) {
+    return NextResponse.json(
+      { error: getDatabaseErrorMessage(error) },
+      { status: 503 },
+    );
+  }
+
   revalidateSite();
 
   return NextResponse.json({ ok: true });

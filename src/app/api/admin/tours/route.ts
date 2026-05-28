@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 import { NextResponse, type NextRequest } from "next/server";
 import { isAdminRequest, unauthorized } from "@/lib/admin-auth";
 import { slugify } from "@/lib/slug";
-import { connectDb, hasMongoUri } from "@/lib/db";
+import { connectDb, getDatabaseErrorMessage, hasMongoUri } from "@/lib/db";
 import { getTours } from "@/lib/content";
 import { TourModel } from "@/models/Tour";
 
@@ -96,9 +96,29 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  await connectDb();
-  const created = await TourModel.create(tour);
+  let saved;
+  let status = 201;
+  try {
+    await connectDb();
+    const existing = await TourModel.findOne({ slug: tour.slug }).select("_id");
+
+    if (existing) {
+      saved = await TourModel.findByIdAndUpdate(existing._id, tour, {
+        new: true,
+        runValidators: true,
+      });
+      status = 200;
+    } else {
+      saved = await TourModel.create(tour);
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { error: getDatabaseErrorMessage(error) },
+      { status: 503 },
+    );
+  }
+
   revalidateSite();
 
-  return NextResponse.json({ tour: created }, { status: 201 });
+  return NextResponse.json({ tour: saved }, { status });
 }

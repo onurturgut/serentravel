@@ -38,15 +38,45 @@ export function hasR2Config() {
 }
 
 export function getPublicR2Url(key: string) {
-  const publicUrl = requiredEnv("R2_PUBLIC_URL").replace(/\/$/, "");
+  requiredEnv("R2_PUBLIC_URL");
+  return getR2MediaUrl(key);
+}
 
-  if (publicUrl.includes(".r2.cloudflarestorage.com")) {
-    throw new Error(
-      "R2_PUBLIC_URL public gorsel adresi olmali. r2.cloudflarestorage.com S3 API endpoint'idir; r2.dev public URL veya custom domain kullanin.",
-    );
+export function getR2MediaUrl(key: string) {
+  return `/api/media/${key
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/")}`;
+}
+
+export function getR2ObjectKeyFromUrl(url: string) {
+  if (!url) {
+    return null;
   }
 
-  return `${publicUrl}/${key}`;
+  if (url.startsWith("/api/media/")) {
+    return decodeURIComponent(url.replace(/^\/api\/media\//, ""));
+  }
+
+  const publicUrls = [
+    process.env.R2_PUBLIC_URL,
+    process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
+  ]
+    .filter(Boolean)
+    .map((value) => value!.replace(/\/$/, ""));
+
+  for (const publicUrl of publicUrls) {
+    if (url.startsWith(`${publicUrl}/`)) {
+      return decodeURIComponent(url.slice(publicUrl.length + 1));
+    }
+  }
+
+  return null;
+}
+
+export function normalizeR2MediaUrl(url: string) {
+  const key = getR2ObjectKeyFromUrl(url);
+  return key ? getR2MediaUrl(key) : url;
 }
 
 export async function uploadToR2({

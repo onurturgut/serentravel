@@ -86,6 +86,12 @@ function mergeContent(content?: StoredContent | null): SiteContent {
     content as Record<string, unknown> | null,
   ) as Partial<SiteContent> | null;
 
+  const contact = { ...defaultContent.contact, ...(plain?.contact || {}) };
+
+  if (contact.mapQuery === "Fethiye Mugla") {
+    contact.mapQuery = defaultContent.contact.mapQuery;
+  }
+
   return {
     home: mergeHomeContent(plain?.home),
     tours: { ...defaultContent.tours, ...(plain?.tours || {}) },
@@ -96,7 +102,7 @@ function mergeContent(content?: StoredContent | null): SiteContent {
         ? plain.about.values.map(plainValue)
         : defaultContent.about.values,
     },
-    contact: { ...defaultContent.contact, ...(plain?.contact || {}) },
+    contact,
   };
 }
 
@@ -105,11 +111,17 @@ function mergeSettings(settings?: StoredSettings | null): SiteSettings {
     settings as Record<string, unknown> | null,
   ) as Partial<SiteSettings> | null;
 
-  return {
+  const merged = {
     ...defaultSettings,
     ...(plain || {}),
     navLinks: mergeNavLinks(plain?.navLinks),
   };
+
+  if (merged.location === "Fethiye / Mugla, Turkiye") {
+    merged.location = defaultSettings.location;
+  }
+
+  return merged;
 }
 
 export async function getSiteContent() {

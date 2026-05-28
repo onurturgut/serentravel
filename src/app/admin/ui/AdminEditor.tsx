@@ -21,6 +21,7 @@ import type { Category } from "@/lib/content";
 import type { SiteContent, SiteSettings } from "@/lib/site-defaults";
 import { slugify } from "@/lib/slug";
 import type { Tour } from "@/lib/tours";
+import { siteImage } from "@/lib/utils";
 
 type EditableTour = Tour & {
   id?: string;
@@ -37,7 +38,9 @@ type EditableGalleryImage = {
 type EditorStep = "basics" | "media" | "details" | "lists" | "publish";
 type TourTemplate = "tekne" | "macera" | "kultur" | "dalis" | "ozel";
 
-const fallbackImage = "/images/tours/fethiye-12-adalar-tekne-turu.jpg";
+const fallbackImage = siteImage(
+  "/images/tours/fethiye-12-adalar-tekne-turu.jpg",
+);
 
 const templateLabels: Record<TourTemplate, string> = {
   tekne: "Tekne Turu",
@@ -74,14 +77,14 @@ const templateTours: Record<TourTemplate, EditableTour> = {
     short: "Dogayla ic ice, hareketli ve eglenceli bir aktivite deneyimi.",
     description:
       "Profesyonel ekipler esliginde guvenli, planli ve bol enerjili bir macera turu sunulur. Katilim oncesi gerekli bilgilendirme yapilir.",
-    image: "/images/tours/fethiye-jeep-safari.png",
+    image: siteImage("/images/tours/fethiye-jeep-safari.png"),
     duration: "Tam gun",
     type: "Grup aktivitesi",
     booking: "Otel transferli",
     included: ["Transfer", "Rehberlik", "Guvenlik bilgilendirmesi"],
     stops: ["Baslangic noktasi", "Aktivite parkuru", "Mola alani"],
     notes: ["Ek aktiviteler ucretli olabilir."],
-    gallery: ["/images/tours/fethiye-jeep-safari.png"],
+    gallery: [siteImage("/images/tours/fethiye-jeep-safari.png")],
     order: 0,
     isFeatured: false,
     isActive: false,
@@ -93,14 +96,14 @@ const templateTours: Record<TourTemplate, EditableTour> = {
     short: "Tarih, doga ve bolgenin ozel duraklarini bir araya getirir.",
     description:
       "Bolgenin tarihi ve dogal noktalarini kapsayan bu turda misafirlere planli bir gezi deneyimi sunulur. Program detaylari sezon ve uygunluga gore netlesir.",
-    image: "/images/tours/pamukkale-hierapolis.webp",
+    image: siteImage("/images/tours/pamukkale-hierapolis.webp"),
     duration: "Uzun tam gun",
     type: "Kultur turu",
     booking: "Uygunluk icin WhatsApp",
     included: ["Transfer", "Rehberlik", "Program planlamasi"],
     stops: ["Hareket", "Ziyaret noktasi", "Serbest zaman"],
     notes: [],
-    gallery: ["/images/tours/pamukkale-hierapolis.webp"],
+    gallery: [siteImage("/images/tours/pamukkale-hierapolis.webp")],
     order: 0,
     isFeatured: false,
     isActive: false,
@@ -112,14 +115,14 @@ const templateTours: Record<TourTemplate, EditableTour> = {
     short: "Profesyonel ekip esliginde guvenli ve keyifli dalis deneyimi.",
     description:
       "Ilk kez dalis yapacak misafirler icin kisa egitim verilir. Ekipmanlar hazirlanir ve dalis profesyonel ekip kontrolunde gerceklesir.",
-    image: "/images/tours/fethiye-tuplu-dalis.jpg",
+    image: siteImage("/images/tours/fethiye-tuplu-dalis.jpg"),
     duration: "Program saatine gore",
     type: "Tuplu dalis",
     booking: "Kontenjan icin WhatsApp",
     included: ["Kisa egitim", "Dalis ekipmanlari", "Profesyonel egitmen"],
     stops: ["Tekne cikisi", "Dalis noktasi", "Donus"],
     notes: ["Fotograf ve video cekimi ekstra ucretli olabilir."],
-    gallery: ["/images/tours/fethiye-tuplu-dalis.jpg"],
+    gallery: [siteImage("/images/tours/fethiye-tuplu-dalis.jpg")],
     order: 0,
     isFeatured: false,
     isActive: false,
@@ -131,14 +134,14 @@ const templateTours: Record<TourTemplate, EditableTour> = {
     short: "Misafire ozel rota, zamanlama ve esnek program secenekleri.",
     description:
       "Ozel tur planlamasi misafirin beklentisine gore hazirlanir. Rota, sure, katilim sayisi ve hizmet detaylari talebe gore netlestirilir.",
-    image: "/images/tours/fethiye-12-adalar-tekne-turu-2.jpg",
+    image: siteImage("/images/tours/fethiye-12-adalar-tekne-turu-2.jpg"),
     duration: "Rota secimine gore",
     type: "Ozel organizasyon",
     booking: "WhatsApp ile planlama",
     included: ["Rota danismanligi", "Ozel planlama", "Destek"],
     stops: ["Ozel rota", "Mola noktasi", "Donus"],
     notes: [],
-    gallery: ["/images/tours/fethiye-12-adalar-tekne-turu-2.jpg"],
+    gallery: [siteImage("/images/tours/fethiye-12-adalar-tekne-turu-2.jpg")],
     order: 0,
     isFeatured: false,
     isActive: false,

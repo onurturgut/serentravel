@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Instagram, MapPin, MessageCircle } from "lucide-react";
 import type { SiteSettings } from "@/lib/site-defaults";
 import { defaultSettings, whatsappUrl } from "@/lib/site-defaults";
+import { siteImage } from "@/lib/utils";
 
 export function Footer({
   settings = defaultSettings,
@@ -16,7 +17,7 @@ export function Footer({
         <div className="md:col-span-2">
           <div className="flex items-center gap-4">
             <img
-              src="/images/brand/header-logo-512.png"
+              src={siteImage("/images/brand/header-logo-512.png")}
               alt={`${settings.brandTop} ${settings.brandBottom}`}
               width={512}
               height={512}

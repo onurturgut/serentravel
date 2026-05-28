@@ -57,11 +57,22 @@ export async function POST(request: NextRequest) {
   const extension = extensionFromType(file.type);
   const baseName = slugify(file.name.replace(/\.[^.]+$/, "")) || "gorsel";
   const key = `${folder}/${Date.now()}-${baseName}.${extension}`;
-  const url = await uploadToR2({
-    key,
-    body: buffer,
-    contentType: file.type,
-  });
+  let url;
+  try {
+    url = await uploadToR2({
+      key,
+      body: buffer,
+      contentType: file.type,
+    });
+  } catch {
+    return NextResponse.json(
+      {
+        error:
+          "Gorsel R2'ye yuklenemedi. R2 anahtarlari, bucket adi ve internet baglantisini kontrol edin.",
+      },
+      { status: 503 },
+    );
+  }
 
   return NextResponse.json({ key, url });
 }

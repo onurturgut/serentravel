@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { siteImage } from "@/lib/utils";
 
 export function Parallax() {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ export function Parallax() {
         className="absolute inset-0 -top-[15%] -bottom-[15%]"
       >
         <img
-          src="/images/tours/fethiye-12-adalar-tekne-turu.jpg"
+          src={siteImage("/images/tours/fethiye-12-adalar-tekne-turu.jpg")}
           alt="Fethiye 12 Adalar Tekne Turu"
           loading="lazy"
           className="h-full w-full object-cover"

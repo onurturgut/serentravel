@@ -87,7 +87,7 @@ export const defaultSettings: SiteSettings = {
     "Merhaba, Seren Travel turlari hakkinda bilgi almak istiyorum.",
   instagramUrl: "https://www.instagram.com/serentravelagency/",
   instagramLabel: "@serentravelagency",
-  location: "Fethiye / Mugla, Turkiye",
+  location: "Oludeniz Mah. Cumhuriyet Cad. No:41/3, Hisaronu, Fethiye / Mugla",
   footerDescription:
     "Fethiye merkezli tur ve aktivite organizasyonu. Oludeniz, Babadag, Saklikent, Dalyan, Pamukkale ve Rodos rotalarinda profesyonel hizmet.",
   footerBottomText: "Fethiye · Mugla · Turkiye",
@@ -170,7 +170,7 @@ export const defaultContent: SiteContent = {
     whatsappButtonText: "WhatsApp'tan Yaz",
     instagramTitle: "Instagram",
     locationTitle: "Lokasyon",
-    mapQuery: "Fethiye Mugla",
+    mapQuery: "Serentravel, 36.5718248, 29.1331842",
   },
 };
 

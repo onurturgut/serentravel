@@ -1,4 +1,5 @@
 import { connectDb, hasMongoUri } from "@/lib/db";
+import { normalizeR2MediaUrl } from "@/lib/r2";
 import { slugify } from "@/lib/slug";
 import { tours as fallbackTours, type Tour } from "@/lib/tours";
 import { CategoryModel } from "@/models/Category";
@@ -28,14 +29,14 @@ function serializeTour(tour: MongoTour): Tour {
     category: tour.category,
     short: tour.short,
     description: tour.description,
-    image: tour.image,
+    image: normalizeR2MediaUrl(tour.image),
     duration: tour.duration,
     type: tour.type,
     booking: tour.booking,
     included: tour.included || [],
     stops: tour.stops || [],
     notes: tour.notes || [],
-    gallery: tour.gallery || [],
+    gallery: (tour.gallery || []).map(normalizeR2MediaUrl),
     order: tour.order || 0,
     isFeatured: tour.isFeatured || false,
     isActive: tour.isActive !== false,

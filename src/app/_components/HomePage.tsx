@@ -16,6 +16,7 @@ import {
   defaultSettings,
   whatsappUrl,
 } from "@/lib/site-defaults";
+import { siteImage } from "@/lib/utils";
 import type { Tour } from "@/lib/tours";
 
 const features = [
@@ -56,7 +57,7 @@ export function HomePage({
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-          src="/images/seren-travel.webp"
+          src={siteImage("/images/seren-travel.webp")}
           alt="Seren Travel"
           width={1366}
           height={800}
@@ -100,11 +101,11 @@ export function HomePage({
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.72 }}
-            className="mt-8 flex flex-wrap items-center gap-3"
+            className="mt-8 flex max-w-full flex-wrap items-center gap-3"
           >
             <Link
               href={content.primaryButtonHref}
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-gold pl-6 pr-3 text-sm font-semibold text-navy-deep transition-colors hover:bg-gold-soft md:h-14"
+              className="group inline-flex h-12 w-full items-center justify-between gap-2 rounded-full bg-gold pl-6 pr-3 text-sm font-semibold text-navy-deep transition-colors hover:bg-gold-soft sm:w-auto md:h-14"
             >
               {content.primaryButtonText}
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy-deep text-white transition-transform group-hover:translate-x-0.5 md:h-10 md:w-10">
@@ -115,7 +116,7 @@ export function HomePage({
               href={whatsAppHref}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 text-sm font-medium text-white backdrop-blur-md transition-colors hover:border-sea hover:text-sea md:h-14"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 text-sm font-medium text-white backdrop-blur-md transition-colors hover:border-sea hover:text-sea sm:w-auto md:h-14"
             >
               <MessageCircle className="h-4 w-4 text-sea" />
               {content.secondaryButtonText}
@@ -126,7 +127,7 @@ export function HomePage({
 
       <section className="relative overflow-hidden bg-navy-deep py-16 md:py-24">
         <img
-          src="/images/tours/gun-batimi-tekne-turu.jpg"
+          src={siteImage("/images/tours/gun-batimi-tekne-turu.jpg")}
           alt="Seren Travel Fethiye"
           loading="lazy"
           width={1600}
@@ -311,7 +312,7 @@ export function HomePage({
 
       <section className="relative overflow-hidden bg-navy-deep py-16 md:py-24">
         <img
-          src="/images/tours/fethiye-12-adalar-tekne-turu-3.jpg"
+          src={siteImage("/images/tours/fethiye-12-adalar-tekne-turu-3.jpg")}
           alt="Seren Travel galeri"
           loading="lazy"
           width={1600}
